@@ -11,6 +11,12 @@ const cors = require('cors')
 const app = express()                       // Creates an express server in app
 
 /**
+ * Connect to database
+ */
+const db = require('./config/mongodb')
+db.makeConnection()
+
+/**
  * Import routers and middleware
  */
 const morgan = require('morgan')

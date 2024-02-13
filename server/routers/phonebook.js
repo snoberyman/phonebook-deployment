@@ -2,14 +2,9 @@ const express = require('express')
 const phonebookRouter = express.Router()
 
 /**
- * SERVER DATA
+ * Import mongoose model
  */
-let phonebook = 
-[
-  { id: 1, name: 'Arto Hellas', number: '604-234-2195', favourite: true },
-  { id: 2, name: 'Johann Velo', number: '604-220-6792', favourite: false },
-  { id: 3, name: 'Isaiah Wood', number: '604-778-2012', favourite: false }
-]
+const Person = require('../models/person')
 
 /**
  * @receives a GET request to the URL: http://localhost:3001/api/phonebook/about
@@ -26,6 +21,7 @@ phonebookRouter.get('/about', async (request, response) => {
  * @returns bulk persons list as a JSON
  */
 phonebookRouter.get('/', async (request, response) => {
+  const phonebook = await Person.find({})
   response.json(phonebook)
 })
 
@@ -34,9 +30,9 @@ phonebookRouter.get('/', async (request, response) => {
  * @returns a specific person (entry)
  */
 phonebookRouter.get('/:id', async (request, response) => {
-  const id = Number(request.params.id)
-  const findEntry = phonebook.find(entry => entry.id == id)
-  response.json(findEntry)
+  const id = request.params.id
+  const entry = await Person.findById(id)
+  response.json(entry)
 })
 
 /**
@@ -55,15 +51,14 @@ phonebookRouter.post('/', async (request, response) => {
     })
   }
   // Create new entry
-  const newEntry = {
-    id: phonebook.length + 1,
+  const entry = new Person({
     name,
     number,
     favourite: false
-  }
+  })
   // Update phonebook and return resource
-  phonebook = phonebook.concat(newEntry)
-  response.status(201).send(newEntry)
+  const dbResponse = await entry.save()
+  response.status(201).send(dbResponse)
 })
 
 /**
@@ -71,11 +66,11 @@ phonebookRouter.post('/', async (request, response) => {
  * @returns an appropriate status code
  */
 phonebookRouter.put('/:id', async (request, response) => {
-  const id = Number(request.params.id)
+  const id = request.params.id
   // Update existing entry
-  phonebook = phonebook
-    .map(entry => entry.id === id ? {...entry, favourite: !entry.favourite } : entry)
-  response.status(200).send()
+  const entry = await Person.findById(id)
+  const dbResponse = await Person.findByIdAndUpdate(id, { favourite: !entry.favourite }, { new: true })
+  response.status(200).send(dbResponse)
 })
 
 /**
@@ -83,9 +78,9 @@ phonebookRouter.put('/:id', async (request, response) => {
  * @returns an appropriate status code
  */
 phonebookRouter.delete('/:id', async (request, response) => {
-  const id = Number(request.params.id)
+  const id = request.params.id
   // Delete entry
-  phonebook = phonebook.filter(entry => entry.id !== id)
+  await Person.findByIdAndDelete(id)
   response.status(200).send()
 })
 

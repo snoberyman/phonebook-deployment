@@ -1,4 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+/**
+ * Import services
+ */
+import phonebookServices from '../services/phonebook'
 
 /**
  * Import components needed
@@ -7,12 +12,20 @@ import Persons from './Persons'
 import ContactForm from './ContactForm'
 
 const App = () => {
-  const [persons, setPersons] = useState(
-  [
-    { id: 1, name: 'Arto Hellas', number: '604-234-2195', favourite: true },
-    { id: 2, name: 'Johann Velo', number: '604-220-6792', favourite: false },
-    { id: 3, name: 'Isaiah Wood', number: '604-778-2012', favourite: false }
-  ])
+  const [persons, setPersons] = useState([])
+
+  useEffect(() => {
+    syncData()
+  }, [])
+
+  /**
+   * 
+   */
+  const syncData = () => {
+    phonebookServices
+      .getEntries()
+      .then(data => setPersons(data))
+  }
   
   /**
    * Adds a contact, by default, not favourited
@@ -22,16 +35,13 @@ const App = () => {
     e.preventDefault()
     const name = e.target.name.value
     const number = e.target.number.value
-    const newContact = {
-      id: persons.length + 1,
-      name,
-      number,
-      favourite: false
-    }
-    setPersons(persons.concat(newContact))
-    // Update fields
-    e.target.name.value = ''
-    e.target.number.value = ''
+    phonebookServices
+      .createEntry({ name, number })
+      .then(() => {
+        e.target.name.value = ''
+        e.target.number.value = ''
+        syncData()
+      })
   }
 
   /**
@@ -41,8 +51,9 @@ const App = () => {
    */
   const handleDelete = (e, id) => {
     e.preventDefault()
-    const newPersons = persons.filter(person => person.id !== id)
-    setPersons(newPersons)
+    phonebookServices
+      .deleteEntry(id)
+      .then(() => syncData())
   }
 
   /**
@@ -52,11 +63,9 @@ const App = () => {
    */
   const handleUpdate = (e, id) => {
     e.preventDefault()
-    const newPersons = persons
-      .map(person => person.id == id 
-        ? {...person, favourite: !person.favourite} 
-        : person)
-    setPersons(newPersons)
+    phonebookServices
+      .updateEntry(id)
+      .then(() => syncData())
   }
 
   return (

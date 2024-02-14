@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "cd ../client && npm run build && cp -r dist ../server && rm -rf dist",
     "db": "cross-env NODE_ENV=dev node config/init",
     "devServer": "cross-env NODE_ENV=dev nodemon server.js",
     "testServer": "cross-env NODE_ENV=test nodemon server.js",

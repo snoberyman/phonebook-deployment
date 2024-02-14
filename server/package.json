@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:ui": "rm -rf dist && cd ../client && npm run build && cp -r dist ../server",
-    "deploy:full": "npm run build:ui && git add . && git commit -m 'prod build' && git push",
+    "deploy:full": "cross-env NODE_ENV=prod npm run build:ui && cd ../server && git add . && git commit -m 'prod-build' && git push",
     "db": "cross-env NODE_ENV=dev node config/init",
     "start": "cross-env NODE_ENV=prod node server.js",
     "devServer": "cross-env NODE_ENV=dev nodemon server.js",

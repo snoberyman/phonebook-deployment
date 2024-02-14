@@ -9,7 +9,7 @@ import phonebookServices from '../services/phonebook'
  * Import components needed
  */
 import Persons from './Persons'
-import ContactForm from './ContactForm'
+import CreateForm from './CreateForm'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -75,7 +75,7 @@ const App = () => {
         <Persons persons={persons} favouriteOnly={true} onDelete={handleDelete} onUpdate={handleUpdate} />
       <h2>contacts</h2>
         <Persons persons={persons} favouriteOnly={false} onDelete={handleDelete} onUpdate={handleUpdate} />
-      <ContactForm onAdd={handleAdd} />
+      <CreateForm onAdd={handleAdd} />
     </div>
   )
 }

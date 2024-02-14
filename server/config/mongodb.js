@@ -8,14 +8,17 @@ require('dotenv').config({ path: path.join(__dirname, '../.env')})
  * Necessary imports for connecting to our database
  */
 const mongoose = require('mongoose')
+mongoose.set("strictQuery", false)
 
 /**
  * make and close connection functions
  */
 const makeConnection = async () => {
+  const DB = process.env.NODE_ENV === 'dev' ? process.env.DEV_DB : process.env.TEST_DB
   try {
     console.log(`connecting to... ${process.env.MONGODB_URI}`)
-    await mongoose.connect(`mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.MONGODB_URI}/${process.env.DEV_DB}`)
+    await mongoose
+      .connect(`mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.MONGODB_URI}/${DB}`)
     console.log('successful connection to MongoDB')
   } catch (error) {
     console.log('error connecting to MongoDB: ', error)

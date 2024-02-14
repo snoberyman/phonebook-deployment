@@ -14,11 +14,11 @@ mongoose.set("strictQuery", false)
  * make and close connection functions
  */
 const makeConnection = async () => {
-  const DB = process.env.NODE_ENV === 'test' ? process.env.TEST_DB : process.env.DEV_DB
+  const databaseURL = process.env.NODE_ENV === 'test' ? process.env.MONGODB_TEST_URI : process.env.MONGODB_URI
   try {
-    console.log(`connecting to... ${process.env.MONGODB_URI}`)
+    console.log(`connecting to... ${databaseURL}`)
     await mongoose
-      .connect(`mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.MONGODB_URI}/${DB}`)
+      .connect(databaseURL)
     console.log('successful connection to MongoDB')
   } catch (error) {
     console.log('error connecting to MongoDB: ', error)

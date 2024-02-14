@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "setup": "npm install && cd ../client && npm install",
-    "build": "cd ../client && npm run build && cp -r dist ../server && rm -rf dist",
+    "build:ui": "rm -rf dist && cd ../client && npm run build && cp -r dist ../server",
+    "deploy:full": "npm run build:ui && git add . && git commit -m 'prod build' && git push",
     "db": "cross-env NODE_ENV=dev node config/init",
     "start": "cross-env NODE_ENV=prod node server.js",
     "devServer": "cross-env NODE_ENV=dev nodemon server.js",

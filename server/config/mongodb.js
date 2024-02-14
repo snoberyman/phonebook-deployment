@@ -14,7 +14,7 @@ mongoose.set("strictQuery", false)
  * make and close connection functions
  */
 const makeConnection = async () => {
-  const DB = process.env.NODE_ENV === 'dev' ? process.env.DEV_DB : process.env.TEST_DB
+  const DB = process.env.NODE_ENV === 'test' ? process.env.TEST_DB : process.env.DEV_DB
   try {
     console.log(`connecting to... ${process.env.MONGODB_URI}`)
     await mongoose

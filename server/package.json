@@ -7,6 +7,7 @@
     "setup": "npm install && cd ../client && npm install",
     "build": "cd ../client && npm run build && cp -r dist ../server && rm -rf dist",
     "db": "cross-env NODE_ENV=dev node config/init",
+    "start": "node server.js",
     "devServer": "cross-env NODE_ENV=dev nodemon server.js",
     "testServer": "cross-env NODE_ENV=test nodemon server.js",
     "test": "cross-env NODE_ENV=test jest --verbose -runInBand"

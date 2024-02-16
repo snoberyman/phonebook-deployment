@@ -1,6 +1,6 @@
 import axios from 'axios'
 // const baseURL = '/api/phonebook'
-const baseURL = import.meta.env.SERVER_URL + '/api/phonebook';
+const baseURL = 'https://server-test-en38.onrender.com/api/phonebook';
 
 const getEntries = () => {
   const request = axios.get(baseURL)

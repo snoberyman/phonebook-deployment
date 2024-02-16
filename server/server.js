@@ -31,7 +31,7 @@ app.use(cors())
 app.use(express.json())
 
 // Serve static files from the 'public' directory
-app.use(express.static('dist'));
+// app.use(express.static('dist'));
 
 /**
  * Adding middleware and routes

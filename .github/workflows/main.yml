@@ -1,4 +1,4 @@
-name: deploymnet_pipline
+name: deploymnet_pipline_test
 
 on:
   push:

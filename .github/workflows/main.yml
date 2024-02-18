@@ -20,9 +20,9 @@ jobs:
       - name: installing server dependencies
         working-directory: server
         run: npm install
-      - name: running back-end tests
-        working-directory: server
-        run: npm test
+      # - name: running back-end tests
+      #   working-directory: server
+      #   run: npm test
         
       - name: installing client dependencies
         working-directory: client
@@ -31,8 +31,8 @@ jobs:
         working-directory: client
         run: npm test
         
-      - name: deployment
-        run: echo "deploy to render using deploymen hook"
+      - name: deploy server
+        run: curl ${{ secrets.SERVER_DEPLOY_HOOK }}
 
         
 

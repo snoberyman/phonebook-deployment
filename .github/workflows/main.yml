@@ -18,17 +18,17 @@ jobs:
         uses: actions/setup-node@v4.0.2
         
       - name: installing dependencies
-        working-directory: ./server
+        working-directory: server
         run: npm install
-      # - name: running back-end tests
-      #   working-directory: ./server
-      #   run: npm test
+      - name: running back-end tests
+        working-directory: server
+        run: npm test
         
       - name: installing dependencies
-        working-directory: ./cleint
+        working-directory: cleint
         run: npm install
       - name: running front-end tests
-        working-directory: ./cleint
+        working-directory: cleint
         run: npm test
         
       - name: deployment

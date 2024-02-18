@@ -33,6 +33,8 @@ jobs:
         
       - name: deploy server
         run: curl ${{ secrets.SERVER_DEPLOY_HOOK }}
+      - name: deploy cleint
+        run: curl ${{ secrets.CLIENT_DEPLOY_HOOK }}
 
         
 

@@ -7,7 +7,7 @@ on:
 
 jobs:
   deployment:
-    name: deployment_job_test
+    name: deployment_job
     runs-on: ubuntu-latest
 
     steps:

@@ -1,0 +1,39 @@
+name: deploymnet_pipline
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  deployment:
+    name: deployment_job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checking-out code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.2
+        
+      - name: installing dependencies
+        working-directory: ./server
+        run: npm install
+      - name: running back-end tests
+        working-directory: ./server
+        run: npm test
+        
+      - name: installing dependencies
+        working-directory: ./cleint
+        run: npm install
+      - name: running front-end tests
+        working-directory: ./cleint
+        run: npm test
+        
+      - name: deployment
+        run: echo "deploy to render using deploymen hook"
+
+        
+
+        

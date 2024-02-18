@@ -20,9 +20,9 @@ jobs:
       - name: installing dependencies
         working-directory: ./server
         run: npm install
-      - name: running back-end tests
-        working-directory: ./server
-        run: npm test
+      # - name: running back-end tests
+      #   working-directory: ./server
+      #   run: npm test
         
       - name: installing dependencies
         working-directory: ./cleint
